@@ -30,6 +30,46 @@ var pool  = mysql.createPool({
             } catch(e){throw (e)}
         callback(null,response); 
     }}
+    else if (event.currentIntent.name === "visual_graphs"){
+        var name = event.currentIntent.slots.type.toLowerCase();
+        if (name === "irs" || name === "taxes"){
+            var response = {
+                "dialogAction": {
+                    "type": "Close",
+                    "fulfillmentState": "Fulfilled",
+                    "message": {
+                        "contentType": "PlainText",
+                        "content": `Here is the visual graph for: IRS Data: https://mynameuuy.com/irs . \nYou can analyze the data and see the trends over time. \nPlease use username:test & password: 123456`
+                    }
+                }
+            };
+        } else if (name === "covid" || name === "covid-19" || name === "corona" || name === "covid" || name === "corona virus"){
+                var response = {
+                "dialogAction": {
+                    "type": "Close",
+                    "fulfillmentState": "Fulfilled",
+                    "message": {
+                        "contentType": "PlainText",
+                        "content": `Here is the visual graph for: COVID-19 Data: https://mynameuuy.com/covid . \nYou can analyze the data and see the trends over time. \nPlease use username:test & password: 123456`
+                    }
+                }
+            };
+            
+        } else{
+                var response = {
+                "dialogAction": {
+                    "type": "Close",
+                    "fulfillmentState": "Fulfilled",
+                    "message": {
+                        "contentType": "PlainText",
+                        "content": `Sorry, I can't find matches for ${event.currentIntent.slots.type} data!`
+                    }
+                }
+            };
+        }
+
+        callback(null,response); 
+    }
     else if (event.currentIntent.name === "IRS_Question"){
         pool.getConnection(function(err, connection) {
             connection.query(`SELECT * from IRS_2017 where zipcode = "11214"`, function (error, results, fields) {
@@ -157,8 +197,8 @@ var pool  = mysql.createPool({
     }
     else if (event.currentIntent.name === "query_covid_by_county"){
         pool.getConnection(function(err, connection) {
-            connection.query(`SELECT * from covid where name like  "%_${event.currentIntent.slots.county}_%" AND state = "${event.currentIntent.slots.state}"\
-             AND Date = (select max(date) from covid where name like "%_${event.currentIntent.slots.county}_%")` , function (error, results, fields) {
+            connection.query(`SELECT * from covid where name like  "%${event.currentIntent.slots.county}%" AND state like "%${event.currentIntent.slots.state}%"\
+             AND Date = (select max(date) from covid where name like "%${event.currentIntent.slots.county}%")` , function (error, results, fields) {
                 connection.release();
                 if (err) callback(null,err);
                 else {
