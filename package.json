@@ -1,0 +1,32 @@
+{
+  "name": "datazon_lambda",
+  "version": "1.0.0",
+  "description": "AWS Lambda Function Invoked From AWS Lex and Fetch AWS RDS Aurora",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khaled-11/DataZon_Lambda.git"
+  },
+  "keywords": [
+    "AWS",
+    "LAMBDA",
+    "LEX",
+    "RDS",
+    "AURORA",
+    "MYSQL"
+  ],
+  "author": "Khaled Abouseada",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khaled-11/DataZon_Lambda/issues"
+  },
+  "homepage": "https://github.com/khaled-11/DataZon_Lambda#readme",
+  "dependencies": {
+    "mysql2": "^2.1.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  }
+}
